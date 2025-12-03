@@ -1,13 +1,13 @@
 <?php
 
 if ( empty( $attributes['selectedPost'] ) ) {
-    return '';
+    return;
 }
 
 $post = get_post( $attributes['selectedPost'] );
 
 if ( ! $post ) {
-    return '';
+    return;
 }
 
 $url = get_permalink( $post );
