@@ -1,5 +1,5 @@
-import { useBlockProps } from '@wordpress/block-editor';
 import apiFetch from '@wordpress/api-fetch';
+import { useBlockProps } from '@wordpress/block-editor';
 import { useEffect, useState } from "@wordpress/element";
 import { buildQuery, normaliseResult } from "./utilities";
 
@@ -11,13 +11,13 @@ import './editor.scss';
 export default function Edit({ attributes, setAttributes }) {
 	const postType = 'posts';
 	const paginate = 20;
-	const status = 'publish';
+	const status   = 'publish';
 
-	const [searchTerm, setSearchTerm] = useState('');
-	const [options, setOptions] = useState([]);
-	const [posts, setPosts] = useState([]);
+	const [searchTerm, setSearchTerm]   = useState({active: '', debounced: ''});
+	const [options, setOptions]         = useState([]);
+	const [posts, setPosts]             = useState([]);
 	const [isResolving, setIsResolving] = useState(false);
-	const blockProps = useBlockProps();
+	const blockProps                    = useBlockProps();
 
 	useEffect(() => {
 		const runAPIFetch = async (query) => {
@@ -47,9 +47,17 @@ export default function Edit({ attributes, setAttributes }) {
 			}
 		};
 
-		const query = buildQuery(postType, paginate, status, searchTerm);
+		const query = buildQuery(postType, paginate, status, searchTerm.debounced);
 		runAPIFetch(query);
-	}, [searchTerm]);
+	}, [searchTerm.debounced]);
+
+	useEffect(() => {
+		const handler = setTimeout(() => {
+			setSearchTerm(prev => ({debounced: searchTerm.active, active: prev.active}));
+		}, 2000);
+
+		return () => clearTimeout( handler );
+	}, [searchTerm.active]);
 
 	const postToPreview = posts.find((p) => p.id === attributes.selectedPost);
 
@@ -59,7 +67,7 @@ export default function Edit({ attributes, setAttributes }) {
 				attributes={attributes}
 				handleSetSelectedPost={(id) => setAttributes({ selectedPost: Number(id) })}
 				handleSetSearchTerm={setSearchTerm}
-				searchTerm={searchTerm}
+				searchTerm={searchTerm.active}
 				options={options}
 				loading={isResolving}
 			/>
