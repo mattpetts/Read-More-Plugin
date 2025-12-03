@@ -9,9 +9,10 @@ import Settings from "./components/Settings";
 import './editor.scss';
 
 export default function Edit({ attributes, setAttributes }) {
-	const postType = 'posts';
-	const paginate = 20;
-	const status   = 'publish';
+	const postType       = 'posts';
+	const paginate       = 20;
+	const status         = 'publish';
+	const debouncePeriod = 2000;
 
 	const [searchTerm, setSearchTerm]   = useState({active: '', debounced: ''});
 	const [options, setOptions]         = useState([]);
@@ -54,7 +55,7 @@ export default function Edit({ attributes, setAttributes }) {
 	useEffect(() => {
 		const handler = setTimeout(() => {
 			setSearchTerm(prev => ({debounced: searchTerm.active, active: prev.active}));
-		}, 2000);
+		}, debouncePeriod);
 
 		return () => clearTimeout( handler );
 	}, [searchTerm.active]);
