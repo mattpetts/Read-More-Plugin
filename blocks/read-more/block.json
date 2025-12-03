@@ -11,6 +11,12 @@
 	"supports": {
 		"html": false
 	},
+    "attributes": {
+        "selectedPost": {
+            "type": "number",
+            "default": 0
+        }
+    },
     "editorScript": "file:./build/read-more.js",
     "editorStyle": "file:./build/read-more.css",
     "style": "file:./build/style-read-more.css",
