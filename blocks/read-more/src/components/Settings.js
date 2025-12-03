@@ -1,7 +1,5 @@
-import React from 'react';
 import { PanelBody, PanelRow, SelectControl, Spinner, TextControl } from "@wordpress/components";
 import { InspectorControls } from "@wordpress/block-editor";
-
 const Settings = ({ handleSetSearchTerm, handleSetSelectedPost, searchTerm, attributes, options, loading }) => {
 	return (
 		<InspectorControls>
@@ -10,7 +8,7 @@ const Settings = ({ handleSetSearchTerm, handleSetSelectedPost, searchTerm, attr
 					<TextControl
 						label="Search by post name or ID"
 						value={ searchTerm }
-						onChange={ (val) => handleSetSearchTerm(val) }
+						onChange={ (val) => handleSetSearchTerm(prev => ({active: val, debounced: prev.debounced})) }
 					/>
 				</PanelRow>
 				<PanelRow>
