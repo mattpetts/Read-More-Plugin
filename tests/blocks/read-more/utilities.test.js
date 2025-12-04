@@ -18,25 +18,30 @@ describe('isPostId', () => {
 });
 
 describe('buildQuery', () => {
+
+	const makeQuery = (searchTerm) => {
+		return buildQuery('posts', 10, 'publish', searchTerm);
+	}
+
 	test('query is returned with post id as a segment if postId is provided', () => {
-		const query = buildQuery('posts', 10, 'publish', 1);
+		const query = makeQuery(1);
 		expect(query).toContain('/1?');
 	});
 
 	test('query does not contain a search parameter if post id is provided', () => {
-		const query = buildQuery('posts', 10, 'publish', 1);
+		const query = makeQuery(1);
 		expect(query).not.toContain('&search=1');
 	});
 
 	test('paginate, status and postType are in the query as expected', () => {
-		const query = buildQuery('posts', 10, 'publish', 'hello');
+		const query = makeQuery('hello');
 		expect(query).toContain('posts?');
 		expect(query).toContain('per_page=10');
 		expect(query).toContain('&status=publish');
 	});
 
 	test('search parameter is appended is a search term is provided', () => {
-		const query = buildQuery('posts', 10, 'publish', 'hello');
+		const query = makeQuery('hello');
 		expect(query).toContain('&search=hello')
 	})
 });
