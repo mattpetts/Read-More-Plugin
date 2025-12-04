@@ -13,7 +13,14 @@
 * @package ReadMoreDmg
 */
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 function dmg_read_more_register_block() {
     register_block_type( __DIR__ . '/blocks/read-more' );
 }
+
 add_action( 'init', 'dmg_read_more_register_block' );
+
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+    WP_CLI::add_command( 'dmg-read-more-search', \ReadMoreCLI\CLI_Command::class );
+}

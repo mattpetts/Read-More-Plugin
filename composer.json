@@ -1,0 +1,15 @@
+{
+    "name": "matthewpetts/read-more-dmg",
+    "autoload": {
+        "psr-4": {
+            "ReadMoreCLI\\": "cli/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mattpetts",
+            "email": "mattpetts23@gmail.com"
+        }
+    ],
+    "require": {}
+}
