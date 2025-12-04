@@ -8,7 +8,7 @@ const Settings = ({ handleSetSearchTerm, handleSetSelectedPost, searchTerm, attr
 					<TextControl
 						label="Search by post name or ID"
 						value={ searchTerm }
-						onChange={ (val) => handleSetSearchTerm(prev => ({active: val, debounced: prev.debounced})) }
+						onChange={ (val) => handleSetSearchTerm(prev => ({ active: val, debounced: prev.debounced })) }
 					/>
 				</PanelRow>
 				<PanelRow>

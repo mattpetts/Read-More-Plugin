@@ -25,7 +25,7 @@ export default function Edit({ attributes, setAttributes }) {
 			setIsResolving(true);
 
 			try {
-				const result = await apiFetch({ path: `/wp/v2/${query}` });
+				const result = await apiFetch({ path: `/wp/v2/${ query }` });
 
 				// if the result is a single post, it will be an object, if not it will be an array of objects
 				// So we need to check what the result is and convert it to an array is required
@@ -54,10 +54,10 @@ export default function Edit({ attributes, setAttributes }) {
 
 	useEffect(() => {
 		const handler = setTimeout(() => {
-			setSearchTerm(prev => ({debounced: searchTerm.active, active: prev.active}));
+			setSearchTerm(prev => ({ debounced: searchTerm.active, active: prev.active }));
 		}, debouncePeriod);
 
-		return () => clearTimeout( handler );
+		return () => clearTimeout(handler);
 	}, [searchTerm.active]);
 
 	const postToPreview = posts.find((p) => p.id === attributes.selectedPost);
@@ -65,19 +65,19 @@ export default function Edit({ attributes, setAttributes }) {
 	return (
 		<>
 			<Settings
-				attributes={attributes}
-				handleSetSelectedPost={(id) => setAttributes({ selectedPost: Number(id) })}
-				handleSetSearchTerm={setSearchTerm}
-				searchTerm={searchTerm.active}
-				options={options}
-				loading={isResolving}
+				attributes={ attributes }
+				handleSetSelectedPost={ (id) => setAttributes({ selectedPost: Number(id) }) }
+				handleSetSearchTerm={ setSearchTerm }
+				searchTerm={ searchTerm.active }
+				options={ options }
+				loading={ isResolving }
 			/>
 
-			<div {...blockProps}>
+			<div { ...blockProps }>
 				{postToPreview && (
 					<Preview
-						link={postToPreview.link}
-						title={postToPreview.title?.rendered}
+						link={ postToPreview.link }
+						title={ postToPreview.title?.rendered }
 					/>
 				)}
 			</div>

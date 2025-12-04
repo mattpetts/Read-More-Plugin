@@ -1,17 +1,17 @@
 <?php
 
-if ( empty( $attributes['selectedPost'] ) ) {
-    return;
-}
+    if ( empty( $attributes['selectedPost'] ) ) {
+        return;
+    }
 
-$post = get_post( $attributes['selectedPost'] );
+    $post = get_post( $attributes['selectedPost'] );
 
-if ( ! $post ) {
-    return;
-}
+    if ( ! $post ) {
+        return;
+    }
 
-$url = get_permalink( $post );
-$title = esc_html( get_the_title( $post ) );
+    $url = get_permalink( $post );
+    $title = esc_html( get_the_title( $post ) );
 
 ?>
 
