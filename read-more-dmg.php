@@ -22,5 +22,5 @@ function dmg_read_more_register_block() {
 add_action( 'init', 'dmg_read_more_register_block' );
 
 if ( defined( 'WP_CLI' ) && WP_CLI ) {
-    WP_CLI::add_command( 'dmg-read-more-search', \ReadMoreCLI\CLI_Command::class );
+    WP_CLI::add_command( 'dmg-read-more-search', \DMGReadMore\Read_More_CLI::class );
 }
