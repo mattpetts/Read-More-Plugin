@@ -16,6 +16,10 @@ class CLI_Command extends WP_CLI_Command {
         ];
     }
 
+    /**
+     * @param $date
+     * @return string|null
+     */
     private function validate_date_inputs( $date ): string|null {
         if ( $date === null ) {
             return null;
@@ -28,6 +32,11 @@ class CLI_Command extends WP_CLI_Command {
         return date( 'Y-m-d', strtotime( $date ) );
     }
 
+    /**
+     * @param $args
+     * @param $assoc_args
+     * @return void
+     */
     public function __invoke( $args, $assoc_args ) {
         $from = $this->validate_date_inputs( $assoc_args['from'] );
         $to   = $this->validate_date_inputs( $assoc_args['to'] );
