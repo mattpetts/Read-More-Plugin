@@ -2,7 +2,7 @@
     "name": "matthewpetts/read-more-dmg",
     "autoload": {
         "psr-4": {
-            "ReadMoreCLI\\": "cli/"
+            "DMGReadMore\\": "cli/"
         }
     },
     "authors": [

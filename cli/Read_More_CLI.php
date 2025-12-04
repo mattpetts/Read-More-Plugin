@@ -1,12 +1,12 @@
 <?php
 
-namespace ReadMoreCLI;
+namespace DMGReadMore;
 
 use WP_CLI;
 use WP_CLI_Command;
 use WP_Query;
 
-class CLI_Command extends WP_CLI_Command {
+class Read_More_CLI extends WP_CLI_Command {
     private array $date_range;
 
     public function __construct() {
