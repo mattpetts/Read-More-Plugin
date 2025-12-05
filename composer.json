@@ -2,7 +2,7 @@
     "name": "matthewpetts/read-more-dmg",
     "autoload": {
         "psr-4": {
-            "DMGReadMore\\": "cli/"
+            "DMGReadMoreCLI\\": "cli/"
         }
     },
     "authors": [
@@ -11,5 +11,7 @@
             "email": "mattpetts23@gmail.com"
         }
     ],
-    "require": {}
+    "require-dev": {
+        "phpunit/phpunit": "^12.4"
+    }
 }
