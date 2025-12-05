@@ -3,7 +3,6 @@
 namespace DMGReadMoreCLI;
 
 use WP_CLI;
-use WP_Query;
 
 class Read_More_CLI {
     private array $date_range;
