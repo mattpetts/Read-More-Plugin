@@ -1,35 +1,53 @@
 <?php
 
-namespace DMGReadMore;
+namespace DMGReadMoreCLI;
 
 use WP_CLI;
-use WP_CLI_Command;
 use WP_Query;
 
-class Read_More_CLI extends WP_CLI_Command {
+class Read_More_CLI {
     private array $date_range;
 
     public function __construct() {
         $this->date_range = [
-            'date_from' => date( 'Y-m-d', strtotime( '-30 days' ) ),
-            'date_to'   => date( 'Y-m-d' ),
+            "date_from" => date( "Y-m-d", strtotime( "-30 days" ) ),
+            "date_to"   => date( "Y-m-d" ),
         ];
+    }
+
+    /**
+     * @param string $message
+     * @param string $type
+     * @return void
+     */
+    private function create_cli_message( string $message, string $type = "log" ): void {
+        if ( empty( $message ) ) {
+            return;
+        }
+
+        $allowed_types = ["log", "error", "success"];
+
+        if ( ! in_array( $type, $allowed_types ) ) {
+            $type = "log";
+        }
+
+        WP_CLI::{ $type }( $message );
     }
 
     /**
      * @param $date
      * @return string|null
      */
-    private function validate_date_inputs( $date ): string|null {
+    private function validate_and_normalise_date_inputs( $date ): ?string {
         if ( $date === null ) {
             return null;
         }
 
         if ( ! strtotime( $date ) ) {
-            WP_CLI::error( "{$date} is not a valid date (YYYY-MM-DD)" );
+            $this->create_cli_message( "{$date} is not a valid date. Date should be formatted as (YYYY-MM-DD)", "error" );
         }
 
-        return date( 'Y-m-d', strtotime( $date ) );
+        return date( "Y-m-d", strtotime( $date ) );
     }
 
     /**
@@ -37,35 +55,42 @@ class Read_More_CLI extends WP_CLI_Command {
      * @param $assoc_args
      * @return void
      */
-    public function __invoke( $args, $assoc_args ) {
-        $from = $this->validate_date_inputs( $assoc_args['from'] );
-        $to   = $this->validate_date_inputs( $assoc_args['to'] );
+    public function __invoke( $args, $assoc_args ): void {
+        global $wpdb;
 
-        if ( $from && $to ) {
-            $this->date_range['date_from'] = $from;
-            $this->date_range['date_to']   = $to;
+        $has_to   = isset( $assoc_args["to"] );
+        $has_from = isset( $assoc_args["from"] );
+
+        if ( ( ! $has_to && $has_from ) || (  $has_to && ! $has_from ) ) {
+            $this->create_cli_message( "--from and --to must be supplied together", "error" );
         }
 
-        $query_args = [
-            'post_status'    => 'publish',
-            's'              => "wp:dmg/read-more",
-            'posts_per_page' => -1,
-            'fields'         => 'ids',
-            'date_query'     => [
-                'before'    => $this->date_range['date_to'],
-                'after'     => $this->date_range['date_from'],
-                'inclusive' => true,
-            ]
-        ];
+        if ( $has_to && $has_from ) {
+            $from = $this->validate_and_normalise_date_inputs( $assoc_args["from"] );
+            $to   = $this->validate_and_normalise_date_inputs( $assoc_args["to"] );
 
-        $query = new WP_Query( $query_args );
+            $this->date_range["date_from"] = $from;
+            $this->date_range["date_to"]   = $to;
+        }
 
-        if ( $query->have_posts() ) {
-            foreach ( $query->posts as $post ) {
-                WP_CLI::log( $post );
+        $sql = $wpdb->prepare("
+            SELECT ID 
+            FROM $wpdb->posts
+            WHERE post_status = 'publish'
+            AND post_date >= %s
+            AND post_date <= %s
+            AND post_content LIKE '%<!-- wp:dmg/read-more%'
+        ", $this->date_range["date_from"], $this->date_range["date_to"]);
+
+        $post_ids = $wpdb->get_col( $sql );
+
+        if ( count( $post_ids ) > 0 ) {
+            $this->create_cli_message( count( $post_ids ) . " post(s) found!", "success" );
+            foreach ( $post_ids as $id ) {
+                $this->create_cli_message( $id, "log" );
             }
         } else {
-            WP_CLI::error( 'No posts found' );
+            $this->create_cli_message( "No Posts Found", "log" );
         }
     }
 }
