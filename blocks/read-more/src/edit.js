@@ -25,10 +25,7 @@ export default function Edit({ attributes, setAttributes }) {
 			setIsResolving(true);
 
 			try {
-				const result = await apiFetch({ path: `/wp/v2/${ query }` });
-
-				// if the result is a single post, it will be an object, if not it will be an array of objects
-				// So we need to check what the result is and convert it to an array is required
+				const result     = await apiFetch({ path: `/wp/v2/${ query }` });
 				const normalised = normaliseResult(result)
 
 				setPosts(normalised);

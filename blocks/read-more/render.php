@@ -1,10 +1,10 @@
 <?php
 
-    if ( empty( $attributes['selectedPost'] ) ) {
+    if ( empty( $attributes["selectedPost"] ) ) {
         return;
     }
 
-    $post = get_post( $attributes['selectedPost'] );
+    $post = get_post( $attributes["selectedPost"] );
 
     if ( ! $post ) {
         return;

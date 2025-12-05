@@ -15,7 +15,7 @@ The plugin provides a CLI command to identify all posts that contain an instance
 
 ### Usage
 
-The CLI command will be default show posts published in the past 30 days.
+The CLI command will by default show posts published in the past 30 days.
 
 `wp dmg-read-more-search`
 
