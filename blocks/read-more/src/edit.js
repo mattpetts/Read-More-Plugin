@@ -31,7 +31,7 @@ export default function Edit({ attributes, setAttributes }) {
 				setPosts(normalised);
 
 				setOptions([
-					{label: 'Select a post', value: 0},
+					{ label: 'Select a post', value: 0 },
 					...normalised.map((post) => ({
 						label: post.title.rendered,
 						value: post.id,
