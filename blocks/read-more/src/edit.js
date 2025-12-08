@@ -1,5 +1,5 @@
 import apiFetch from '@wordpress/api-fetch';
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { useEffect, useState } from "@wordpress/element";
 import { buildQuery, normaliseResult } from "./utilities";
 
@@ -61,15 +61,16 @@ export default function Edit({ attributes, setAttributes }) {
 
 	return (
 		<>
-			<Settings
-				attributes={ attributes }
-				handleSetSelectedPost={ (id) => setAttributes({ selectedPost: Number(id) }) }
-				handleSetSearchTerm={ setSearchTerm }
-				searchTerm={ searchTerm.active }
-				options={ options }
-				loading={ isResolving }
-			/>
-
+			<InspectorControls>
+				<Settings
+					attributes={ attributes }
+					handleSetSelectedPost={ (id) => setAttributes({ selectedPost: Number(id) }) }
+					handleSetSearchTerm={ setSearchTerm }
+					searchTerm={ searchTerm.active }
+					options={ options }
+					loading={ isResolving }
+				/>
+			</InspectorControls>
 			<div {...blockProps}>
 				{postToPreview && (
 					<Preview
