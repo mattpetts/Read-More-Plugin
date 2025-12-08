@@ -6,7 +6,7 @@
 	"title": "DMG Read More",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "Example block scaffolded with Create Block tool.",
+	"description": "A Wordpress block that adds a Read More anchor tag to a page and allows a user to populate it with a specific post",
 	"example": {},
 	"supports": {
 		"html": false

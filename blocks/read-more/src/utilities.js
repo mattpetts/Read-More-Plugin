@@ -22,8 +22,8 @@ export const normaliseResult = (res) => {
 	if (Array.isArray(res)) {
 		return res;
 	} else {
-		if ( res?.id ) {
-			return [ res ]
+		if (res?.id) {
+			return [res]
 		}
 	}
 
