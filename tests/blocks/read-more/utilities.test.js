@@ -1,4 +1,4 @@
-import { isPostId, buildQuery, normaliseResult } from "../../../blocks/read-more/src/utilities";
+import { isPostId, buildQuery, normaliseResult } from '../../../blocks/read-more/src/utilities';
 
 describe('isPostId', () => {
 	test('function returns true if searchTerm is a number', () => {
