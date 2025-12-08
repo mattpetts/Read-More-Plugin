@@ -1,5 +1,7 @@
+import React from "react";
 import {PanelBody, PanelRow, SelectControl, Spinner, TextControl} from "@wordpress/components";
 import {InspectorControls} from "@wordpress/block-editor";
+
 const Settings = ({handleSetSearchTerm, handleSetSelectedPost, searchTerm, attributes, options, loading}) => {
 	return (
 		<InspectorControls>
