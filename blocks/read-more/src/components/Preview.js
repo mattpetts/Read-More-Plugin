@@ -1,6 +1,6 @@
-const Preview = ({ link, title }) => {
+const Preview = ({link, title}) => {
 	return (
-		<p className="dmg-read-more">Read more: <a href={ link }>{ title }</a></p>
+		<p className="dmg-read-more">Read more: <a href={link}>{title}</a></p>
 	);
 };
 
