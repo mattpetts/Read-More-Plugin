@@ -16,14 +16,14 @@ export const isPostId = (input) => {
  * @returns {string}
  */
 export const buildQuery = (postType, paginate, status, searchTerm) => {
-	let path = `${ postType }`;
-	let query = `?per_page=${ paginate }&order=desc&orderby=date&status=${ status }`;
+	let path = `${postType}`;
+	let query = `?per_page=${paginate}&order=desc&orderby=date&status=${status}`;
 
 	if (searchTerm) {
 		if (isPostId(searchTerm)) {
-			path += `/${ searchTerm }`;
+			path += `/${searchTerm}`;
 		} else {
-			query += `&search=${ encodeURIComponent(searchTerm) }`;
+			query += `&search=${encodeURIComponent(searchTerm)}`;
 		}
 	}
 
