@@ -10,9 +10,7 @@ jest.mock('@wordpress/components', ()  => ({
 			{ label }
 			<select aria-label={ label } value={ value } onChange={ (e) => onChange(e.target.value) }>
 				{ options?.map(opt => (
-					<option key={ opt.value ?? opt.id } value={ opt.value ?? opt.id }>
-						{ opt.label }
-					</option>
+					<option key={ opt.value } value={ opt.value }>{ opt.label }</option>
 				))}
 			</select>
 		</label>
@@ -70,9 +68,19 @@ describe('Settings Component', () => {
 	});
 
 	test('SelectControl renders correct options', () => {
-		renderSettings({ options: [{ id: 1, label: 'hello' }, { id: 2, label: 'world' }] });
+		renderSettings({ options: [{ value: 1, label: 'hello' }, { value: 2, label: 'world' }] });
 
 		expect(screen.getByText('hello')).toBeInTheDocument();
 		expect(screen.getByText('world')).toBeInTheDocument();
+	});
+
+	test('Selecting an option calls handleSetSelectedPost', () => {
+		const myCallback = jest.fn();
+		renderSettings({ handleSetSelectedPost: myCallback, options: [{ value: 1, label: 'hello' }, { value: 2, label: 'world' }] });
+
+		const input = screen.getByLabelText('Found Posts');
+		fireEvent.change(input, { target: { value: 2 } });
+
+		expect(myCallback).toHaveBeenCalled();
 	});
 });
