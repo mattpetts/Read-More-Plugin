@@ -37,14 +37,8 @@ describe('Settings Component', () => {
 			...overrides
 		}
 
-		return {
-			renderResult: render( <Settings { ...props } />)
-		}
+		return render( <Settings { ...props } />)
 	}
-
-	beforeEach(() => {
-		jest.clearAllMocks();
-	});
 
 	test('search box renders the correct value', () => {
 		renderSettings();
