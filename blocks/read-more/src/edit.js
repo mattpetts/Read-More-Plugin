@@ -1,20 +1,20 @@
 import apiFetch from '@wordpress/api-fetch';
-import {useBlockProps} from '@wordpress/block-editor';
-import {useEffect, useState} from "@wordpress/element";
-import {buildQuery, normaliseResult} from "./utilities";
+import { useBlockProps } from '@wordpress/block-editor';
+import { useEffect, useState } from "@wordpress/element";
+import { buildQuery, normaliseResult } from "./utilities";
 
 import Preview from "./components/Preview";
 import Settings from "./components/Settings";
 
 import './editor.scss';
 
-export default function Edit({attributes, setAttributes}) {
+export default function Edit({ attributes, setAttributes }) {
 	const postType       = 'posts';
 	const paginate       = 20;
 	const status         = 'publish';
 	const debouncePeriod = 2000;
 
-	const [searchTerm, setSearchTerm]   = useState({active: '', debounced: ''});
+	const [searchTerm, setSearchTerm]   = useState({ active: '', debounced: '' });
 	const [options, setOptions]         = useState([]);
 	const [posts, setPosts]             = useState([]);
 	const [isResolving, setIsResolving] = useState(false);
@@ -25,7 +25,7 @@ export default function Edit({attributes, setAttributes}) {
 			setIsResolving(true);
 
 			try {
-				const result     = await apiFetch({path: `/wp/v2/${query}`});
+				const result     = await apiFetch({ path: `/wp/v2/${ query }` });
 				const normalised = normaliseResult(result)
 
 				setPosts(normalised);
@@ -39,7 +39,7 @@ export default function Edit({attributes, setAttributes}) {
 				]);
 			} catch (err) {
 				setPosts([]);
-				setOptions([{label: 'No results found', value: 0}]);
+				setOptions([{ label: 'No results found', value: 0 }]);
 			} finally {
 				setIsResolving(false);
 			}
@@ -51,7 +51,7 @@ export default function Edit({attributes, setAttributes}) {
 
 	useEffect(() => {
 		const handler = setTimeout(() => {
-			setSearchTerm(prev => ({debounced: searchTerm.active, active: prev.active}));
+			setSearchTerm(prev => ({ debounced: searchTerm.active, active: prev.active }));
 		}, debouncePeriod);
 
 		return () => clearTimeout(handler);
@@ -62,19 +62,19 @@ export default function Edit({attributes, setAttributes}) {
 	return (
 		<>
 			<Settings
-				attributes={attributes}
-				handleSetSelectedPost={(id) => setAttributes({selectedPost: Number(id)})}
-				handleSetSearchTerm={setSearchTerm}
-				searchTerm={searchTerm.active}
-				options={options}
-				loading={isResolving}
+				attributes={ attributes }
+				handleSetSelectedPost={ (id) => setAttributes({ selectedPost: Number(id) }) }
+				handleSetSearchTerm={ setSearchTerm }
+				searchTerm={ searchTerm.active }
+				options={ options }
+				loading={ isResolving }
 			/>
 
 			<div {...blockProps}>
 				{postToPreview && (
 					<Preview
-						link={postToPreview.link}
-						title={postToPreview.title?.rendered}
+						link={ postToPreview.link }
+						title={ postToPreview.title?.rendered }
 					/>
 				)}
 			</div>

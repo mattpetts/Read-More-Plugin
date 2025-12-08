@@ -1,9 +1,9 @@
-import {registerBlockType} from '@wordpress/blocks';
+import { registerBlockType } from '@wordpress/blocks';
 import './style.scss';
 import Edit from './edit';
 import metadata from '../block.json';
 
-const {category, title, icon, name, attributes} = metadata;
+const { category, title, icon, name, attributes } = metadata;
 
 registerBlockType(name, {
 	title,

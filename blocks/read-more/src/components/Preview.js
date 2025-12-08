@@ -1,5 +1,3 @@
-import React from "react";
-
 const Preview = ({ link, title }) => {
 	if (!link || !title) {
 		return null;
