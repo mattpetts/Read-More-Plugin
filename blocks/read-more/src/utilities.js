@@ -47,3 +47,23 @@ export const normaliseResult = (res) => {
 
 	return [];
 }
+
+/**
+ *
+ * @param posts
+ * @returns {[{label: string, value: number}]}
+ */
+export const createSelectOptions = (posts) => {
+
+	const options = posts.filter(post => post.id && post.title.rendered);
+
+	return [
+		{ label: 'Select a post', value: 0 },
+		...options.map(option => {
+			return {
+				label: option.title.rendered,
+				value: option.id,
+			}
+		}),
+	];
+}

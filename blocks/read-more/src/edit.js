@@ -1,17 +1,20 @@
 import apiFetch from '@wordpress/api-fetch';
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
 import { useEffect, useState } from "@wordpress/element";
-import { buildQuery, normaliseResult } from "./utilities";
+import { buildQuery, normaliseResult, createSelectOptions } from "./utilities";
 
 import Preview from "./components/Preview";
 import Settings from "./components/Settings";
 
 import './editor.scss';
 
+const queryConfig = {
+	post_type: 'posts',
+	per_page: 20,
+	status: 'publish'
+}
+
 export default function Edit({ attributes, setAttributes }) {
-	const postType       = 'posts';
-	const paginate       = 20;
-	const status         = 'publish';
 	const debouncePeriod = 2000;
 
 	const [searchTerm, setSearchTerm]   = useState({ active: '', debounced: '' });
@@ -25,18 +28,10 @@ export default function Edit({ attributes, setAttributes }) {
 			setIsResolving(true);
 
 			try {
-				const result     = await apiFetch({ path: `/wp/v2/${ query }` });
+				const result     = await apiFetch({ path: `/wp/v2/${query}` });
 				const normalised = normaliseResult(result)
-
 				setPosts(normalised);
-
-				setOptions([
-					{ label: 'Select a post', value: 0 },
-					...normalised.map((post) => ({
-						label: post.title.rendered,
-						value: post.id,
-					})),
-				]);
+				setOptions(createSelectOptions(normalised));
 			} catch (err) {
 				setPosts([]);
 				setOptions([{ label: 'No results found', value: 0 }]);
@@ -45,7 +40,7 @@ export default function Edit({ attributes, setAttributes }) {
 			}
 		};
 
-		const query = buildQuery(postType, paginate, status, searchTerm.debounced);
+		const query = buildQuery(queryConfig.post_type, queryConfig.per_page, queryConfig.status, searchTerm.debounced);
 		runAPIFetch(query);
 	}, [searchTerm.debounced]);
 
