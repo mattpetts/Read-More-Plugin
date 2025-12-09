@@ -21,6 +21,8 @@ export default function Edit({ attributes, setAttributes }) {
 	const [options, setOptions]         = useState([]);
 	const [posts, setPosts]             = useState([]);
 	const [isResolving, setIsResolving] = useState(false);
+	const [page, setPage]               = useState(1);
+	const [totalPages, setTotalPages]   = useState(1);
 	const blockProps                    = useBlockProps();
 
 	useEffect(() => {
@@ -28,11 +30,16 @@ export default function Edit({ attributes, setAttributes }) {
 			setIsResolving(true);
 
 			try {
-				const result     = await apiFetch({ path: `/wp/v2/${query}` });
-				const normalised = normaliseResult(result)
+				const result     = await apiFetch({ path: `/wp/v2/${query}`, parse: false  });
+				const json       = await result.json();
+				const normalised = normaliseResult(json)
+				const totalPages = result.headers.get('X-WP-TotalPages');
+
 				setPosts(normalised);
+				setTotalPages(totalPages ? Number(totalPages) : 1);
 				setOptions(createSelectOptions(normalised));
 			} catch (err) {
+				console.log(err)
 				setPosts([]);
 				setOptions([{ label: 'No results found', value: 0 }]);
 			} finally {
@@ -40,13 +47,14 @@ export default function Edit({ attributes, setAttributes }) {
 			}
 		};
 
-		const query = buildQuery(queryConfig.post_type, queryConfig.per_page, queryConfig.status, searchTerm.debounced);
+		const query = buildQuery(queryConfig.post_type, queryConfig.per_page, queryConfig.status, searchTerm.debounced, page);
 		runAPIFetch(query);
-	}, [searchTerm.debounced]);
+	}, [searchTerm.debounced, page]);
 
 	useEffect(() => {
 		const handler = setTimeout(() => {
 			setSearchTerm(prev => ({ debounced: searchTerm.active, active: prev.active }));
+			setPage(1);
 		}, debouncePeriod);
 
 		return () => clearTimeout(handler);
@@ -64,6 +72,9 @@ export default function Edit({ attributes, setAttributes }) {
 					searchTerm={ searchTerm.active }
 					options={ options }
 					loading={ isResolving }
+					page={ page }
+					totalPages={ totalPages }
+					handleUpdatePage={ (page) => setPage(page) }
 				/>
 			</InspectorControls>
 			<div {...blockProps}>

@@ -13,11 +13,12 @@ export const isPostId = (input) => {
  * @param paginate
  * @param status
  * @param searchTerm
+ * @param page
  * @returns {string}
  */
-export const buildQuery = (postType, paginate, status, searchTerm) => {
+export const buildQuery = (postType, paginate, status, searchTerm, page) => {
 	let path = `${postType}`;
-	let query = `?per_page=${paginate}&order=desc&orderby=date&status=${status}`;
+	let query = `?per_page=${paginate}&page=${page}&order=desc&orderby=date&status=${status}`;
 
 	if (searchTerm) {
 		if (isPostId(searchTerm)) {
