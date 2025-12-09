@@ -1,6 +1,6 @@
 import apiFetch from '@wordpress/api-fetch';
-import { useState, useEffect } from "@wordpress/element";
-import { normaliseResult } from "../utilities";
+import { useState, useEffect } from '@wordpress/element';
+import { normaliseResult } from '../utilities';
 
 /**
  *
