@@ -1,4 +1,4 @@
-import { isPostId, buildQuery, normaliseResult } from '../../../blocks/read-more/src/utilities';
+import { isPostId, buildQuery, normaliseResult, createSelectOptions } from '../../../blocks/read-more/src/utilities';
 
 describe('isPostId', () => {
 	test('function returns true if searchTerm is a number', () => {
@@ -71,4 +71,39 @@ describe('normaliseResult', () => {
 
 		expect(result).toEqual([]);
 	});
+});
+
+describe('createSelectOptions', () => {
+
+	const defaultOption = [{ label: 'Select a post', value: 0 }];
+
+	test('returns just the default option if posts is an empty array', () => {
+		const posts = [];
+		const result = createSelectOptions(posts);
+
+		expect(result).toEqual(defaultOption);
+	});
+
+	test('returns correct options based on posts array', () => {
+		const posts = [
+			{ id: 1, title: { rendered: 'hello' } },
+			{ id: 2, title: { rendered: 'world' } },
+		];
+		const result = createSelectOptions(posts);
+
+		expect(result).toEqual([...defaultOption, { value: 1, label: 'hello' }, { value: 2, label: 'world' }]);
+	});
+
+	test('does not create an option if post array does not contain the required params', () => {
+		const posts = [
+			{ id: 1, title: 'hello' },
+			{ id: 2, title: { rendered: 'world' } },
+			{ id: 3, title: { rendered: 'Test Option' } },
+			{ title: { rendered: 'Another Test' } },
+		];
+		const result = createSelectOptions(posts);
+
+		expect(result).toEqual([...defaultOption, { value: 2, label: 'world' }, { value: 3, label: 'Test Option' }]);
+	});
+
 });
