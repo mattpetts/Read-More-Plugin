@@ -1,4 +1,11 @@
 import { useState, useEffect } from "@wordpress/element";
+
+/**
+ *
+ * @param value
+ * @param delay
+ * @returns {string}
+ */
 export const useDebounce = (value, delay) => {
 	const [debounced, setDebounced] = useState(value);
 
