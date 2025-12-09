@@ -21,21 +21,25 @@ const Settings = ({
 					onChange={ (val) => handleSetSearchTerm(prev => ({ active: val, debounced: prev.debounced } )) }
 				/>
 			</PanelRow>
-			<PanelRow>
-				{loading ? <Spinner /> :
-					<>
+			{!loading ?
+				<>
+					<PanelRow>
 						<SelectControl
 							label="Found Posts"
 							options={ options }
 							onChange={ (val) => handleSetSelectedPost(val) }
 							value={ attributes.selectedPost ? attributes.selectedPost.id : 0 }
 						/>
-					</>
-				}
-			</PanelRow>
-			<PanelRow>
-				{ !loading && <Pagination page={ page } totalPages={ totalPages } handleUpdatePage={ handleUpdatePage } /> }
-			</PanelRow>
+					</PanelRow>
+					<PanelRow>
+						<Pagination page={ page } totalPages={ totalPages } handleUpdatePage={ handleUpdatePage } />
+					</PanelRow>
+				</>
+				:
+				<PanelRow>
+					<Spinner />
+				</PanelRow>
+			}
 		</PanelBody>
 	);
 };
