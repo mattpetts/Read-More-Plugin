@@ -1,7 +1,7 @@
-import { renderHook, act } from "@testing-library/react";
-import { useDebounce } from "../../../../blocks/read-more/src/hooks/useDebounce";
+import { renderHook, act } from '@testing-library/react';
+import { useDebounce } from '../../../../blocks/read-more/src/hooks/useDebounce';
 
-describe('useDebounce', () => {
+describe('useDebounce Hook', () => {
 	beforeEach(() => {
 		jest.useFakeTimers();
 	});
