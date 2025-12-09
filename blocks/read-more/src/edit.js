@@ -39,7 +39,6 @@ export default function Edit({ attributes, setAttributes }) {
 				setTotalPages(totalPages ? Number(totalPages) : 1);
 				setOptions(createSelectOptions(normalised));
 			} catch (err) {
-				console.log(err)
 				setPosts([]);
 				setOptions([{ label: 'No results found', value: 0 }]);
 			} finally {
