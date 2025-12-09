@@ -21,8 +21,7 @@ export default function Edit({ attributes, setAttributes }) {
 	const [page, setPage]               = useState(1);
 	const [totalPages, setTotalPages]   = useState(1);
 	const blockProps                    = useBlockProps();
-
-	const debounced = useDebounce(searchTerm, 2000);
+	const debounced                     = useDebounce(searchTerm, 2000);
 
 	useEffect(() => {
 		const runAPIFetch = async (query) => {
@@ -50,6 +49,7 @@ export default function Edit({ attributes, setAttributes }) {
 	}, [debounced, page]);
 
 	useEffect(() => {
+		// reset the current page to 1 when the search term changes
 		setPage(1);
 	}, [debounced]);
 
