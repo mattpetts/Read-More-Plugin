@@ -9,7 +9,7 @@ jest.mock('@wordpress/components', ()  => ({
 		<label>
 			{ label }
 			<select aria-label={ label } value={ value } onChange={ (e) => onChange(e.target.value) }>
-				{ options?.map(opt => (
+				{options?.map(opt => (
 					<option key={ opt.value } value={ opt.value }>{ opt.label }</option>
 				))}
 			</select>
@@ -32,6 +32,9 @@ describe('Settings Component', () => {
 			attributes: { selectedPost: null },
 			options: [],
 			loading: false,
+			page: 1,
+			totalPages: 1,
+			handleUpdatePage: jest.fn(),
 			...overrides
 		}
 
