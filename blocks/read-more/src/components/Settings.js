@@ -1,5 +1,5 @@
-import { PanelBody, PanelRow, SelectControl, Spinner, TextControl } from "@wordpress/components";
-import Pagination from "./Pagination";
+import { PanelBody, PanelRow, SelectControl, Spinner, TextControl } from '@wordpress/components';
+import Pagination from './Pagination';
 
 const Settings = ({
 	handleSetSearchTerm,

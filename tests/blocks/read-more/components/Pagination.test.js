@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import Pagination from "../../../../blocks/read-more/src/components/Pagination";
+import Pagination from '../../../../blocks/read-more/src/components/Pagination';
 
 describe('Pagination Component', () => {
 	test('does not render if there is 1 or less total pages', async () => {

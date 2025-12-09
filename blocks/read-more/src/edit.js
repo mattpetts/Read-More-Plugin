@@ -1,10 +1,10 @@
 import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { useEffect, useState } from "@wordpress/element";
-import { buildQuery, createSelectOptions } from "./utilities";
-import { useDebounce } from "./hooks/useDebounce";
-import { useApiRequest } from "./hooks/useApiRequest";
-import Preview from "./components/Preview";
-import Settings from "./components/Settings";
+import { useEffect, useState } from '@wordpress/element';
+import { buildQuery, createSelectOptions } from './utilities';
+import { useDebounce } from './hooks/useDebounce';
+import { useApiRequest } from './hooks/useApiRequest';
+import Preview from './components/Preview';
+import Settings from './components/Settings';
 import './editor.scss';
 
 const queryConfig = {
