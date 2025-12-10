@@ -15,6 +15,13 @@
         "selectedPost": {
             "type": "number",
             "default": 0
+        },
+        "preview": {
+          "type": "object",
+          "default": {
+              "title": "",
+              "link": ""
+          }
         }
     },
     "editorScript": "file:./build/read-more.js",
