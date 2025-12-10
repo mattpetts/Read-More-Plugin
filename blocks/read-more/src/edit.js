@@ -38,7 +38,12 @@ export default function Edit({ attributes, setAttributes }) {
 		setPage(1);
 	}, [debounced]);
 
-	const postToPreview = posts.find((p) => p.id === attributes.selectedPost);
+	useEffect(() => {
+		const selected =  posts.find((p) => p.id === attributes.selectedPost);
+		if (selected) {
+			setAttributes({ preview: { title: selected.title.rendered, link: selected.link } })
+		}
+	}, [attributes.selectedPost]);
 
 	return (
 		<>
@@ -55,11 +60,11 @@ export default function Edit({ attributes, setAttributes }) {
 					handleUpdatePage={ (page) => setPage(page) }
 				/>
 			</InspectorControls>
-			<div {...blockProps}>
-				{postToPreview && (
+			<div { ...blockProps }>
+				{(attributes.preview.title && attributes.preview.link) && (
 					<Preview
-						link={ postToPreview.link }
-						title={ postToPreview.title?.rendered }
+						link={ attributes.preview.link }
+						title={ attributes.preview.title }
 					/>
 				)}
 			</div>
